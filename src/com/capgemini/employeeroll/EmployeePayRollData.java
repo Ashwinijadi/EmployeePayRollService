@@ -1,4 +1,3 @@
-s
 package com.capgemini.employeeroll;
 
 public class EmployeePayRollData {

@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeePayRollService {
+	public enum IOService {
+		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+	}
+
 	private List<EmployeePayRollData> employeePayrollList;
 
 	public EmployeePayRollService() {
@@ -19,7 +23,7 @@ public class EmployeePayRollService {
 		EmployeePayRollService employeePayrollService = new EmployeePayRollService(employeePayrollList);
 		Scanner consoleInputReader = new Scanner(System.in);
 		employeePayrollService.readEmployeePayrollData(consoleInputReader);
-		employeePayrollService.writeEmployeePayrollData();
+		employeePayrollService.writeEmployeePayrollData(IOService.CONSOLE_IO);
 	}
 
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
@@ -32,7 +36,23 @@ public class EmployeePayRollService {
 		employeePayrollList.add(new EmployeePayRollData(id, name, salary));
 	}
 
-	public void writeEmployeePayrollData() {
-		System.out.println("data on cosole:" + employeePayrollList);
+	public void writeEmployeePayrollData(IOService ioService) {
+		if (ioService.equals(IOService.CONSOLE_IO))
+			System.out.println("Writing Employee payroll data on Console: " + employeePayrollList);
+		else if (ioService.equals(IOService.FILE_IO))
+			new EmployeePayrollFileIOService().writeData(employeePayrollList);
+
 	}
+
+	public void printData(IOService ioService) {
+		if (ioService.equals(IOService.FILE_IO))
+			new EmployeePayrollFileIOService().printData();
+	}
+
+	public long countEntries(IOService ioService) {
+		if (ioService.equals(IOService.FILE_IO))
+			return new EmployeePayrollFileIOService().countEntries();
+		return 0;
+	}
+
 }
