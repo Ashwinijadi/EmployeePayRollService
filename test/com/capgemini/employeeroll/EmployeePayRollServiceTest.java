@@ -1,6 +1,8 @@
 package com.capgemini.employeeroll;
 
 import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +27,7 @@ public class EmployeePayRollServiceTest {
 		EmployeePayRollData[] Employees = { new EmployeePayRollData(1, "ashu", 100000.0),
 				new EmployeePayRollData(2, "shiny", 200000.0), new EmployeePayRollData(3, "joy", 300000.0) };
 		EmployeePayRollService employeePayRollService1;
-		employeePayRollService1 =new EmployeePayRollService(Arrays.asList(Employees));
+		employeePayRollService1 = new EmployeePayRollService(Arrays.asList(Employees));
 		employeePayRollService1.writeEmployeePayrollData(FILE_IO);
 		employeePayRollService1.printData(FILE_IO);
 		long entries = employeePayRollService1.countEntries(FILE_IO);
@@ -37,11 +39,17 @@ public class EmployeePayRollServiceTest {
 		EmployeePayRollData[] Employee = { new EmployeePayRollData(1, "ash", 100000.0),
 				new EmployeePayRollData(2, "sweet", 200000.0), new EmployeePayRollData(3, "smile", 300000.0) };
 		EmployeePayRollService employeePayRollService;
-		 employeePayRollService= new EmployeePayRollService(Arrays.asList(Employee));
+		employeePayRollService = new EmployeePayRollService(Arrays.asList(Employee));
 		employeePayRollService.writeEmployeePayrollData(FILE_IO);
 		employeePayRollService.printData(FILE_IO);
 		long entries = employeePayRollService.countEntries(FILE_IO);
-		System.out.println("number of entries : "+entries);
+		System.out.println("number of entries : " + entries);
 		Assert.assertEquals(3, entries);
+	}
+
+	@Test
+	public void givenFileOnReadingFileShouldMatchEmployeecount() {
+		EmployeePayRollService employeePayrollService = new EmployeePayRollService();
+		List<EmployeePayRollData> entries = employeePayrollService.readPayrollData(FILE_IO);
 	}
 }
